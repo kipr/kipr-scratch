@@ -1,0 +1,6 @@
+[submodule "scratch-blocks"]
+	path = scratch-blocks
+	url = https://github.com/LLK/scratch-blocks.git
+[submodule "libwallaby"]
+	path = libwallaby
+	url = https://github.com/kipr/libwallaby

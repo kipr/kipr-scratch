@@ -1,0 +1,34 @@
+{
+  "motor": {
+    "name": "Motor",
+    "functions": [
+      "motor",
+      "ao",
+      "off",
+      "fd",
+      "bk"
+    ]
+  },
+  "servo": {
+    "name": "Servo",
+    "functions": [
+      "enable_servos",
+      "disable_servos",
+      "set_servo_position",
+      "get_servo_position"
+    ]
+  },
+  "sensors": {
+    "name": "Sensors",
+    "functions": [
+      "analog",
+      "digital"
+    ]
+  },
+  "time": {
+    "name": "Time",
+    "functions": [
+      "msleep"
+    ]
+  }
+}
