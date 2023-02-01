@@ -1,6 +1,6 @@
 #!/bin/python3
 
-from os import path, rename, environ
+from os import path, rename, environ, chdir
 import sys
 import subprocess
 
@@ -75,23 +75,11 @@ for file in to_delete:
 
 # Blockify
 print("Blockifying libwallaby...")
-ret = subprocess.run(["python3", "blockify.py", "libwallaby-build"])
+ret = subprocess.run(["python3", "blockify.py", "libwallaby-build", "scratch-blocks/blocks_vertical"])
 
-# Generate new default toolbox
-print("Generating new default toolbox...")
-
-
-# Install scratch-blocks dependencies
-print("Installing scratch-blocks dependencies...")
+# Install and build scratch-blocks dependencies
+print("Installing and building scratch-blocks...")
 ret = subprocess.run(["npm", "install"], cwd="scratch-blocks")
 if ret.returncode != 0:
-  print("Failed to install scratch-blocks dependencies.")
+  print("Failed to install/build scratch-blocks.")
   exit(1)
-
-# Build scratch-blocks
-print("Building scratch-blocks...")
-ret = subprocess.run(["node", "build.py"], cwd="scratch-blocks")
-if ret.returncode != 0:
-  print("Failed to build scratch-blocks.")
-  exit(1)
-

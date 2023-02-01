@@ -1,0 +1,74 @@
+{
+  "motor": {
+    "primary": "#ff0000",
+    "secondary": "#aa0000"
+  },
+  "servo": {
+    "primary": "#00ff00",
+    "secondary": "#00aa00"
+  },
+  "digital": {
+    "primary": "#0000ff",
+    "secondary": "#0000aa"
+  },
+  "analog": {
+    "primary": "#ffff00",
+    "secondary": "#aaaa00"
+  },
+  "accel": {
+    "primary": "#00ffff",
+    "secondary": "#00aaaa"
+  },
+  "time": {
+    "primary": "#ff00ff",
+    "secondary": "#aa00aa"
+  },
+  "wait_for": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "core": {
+    "primary": "#ffffff",
+    "secondary": "#aaaaaa"
+  },
+  "create": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "magneto": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "gyro": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "compass": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "console": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "geometry": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "button": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "battery": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "botball": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  },
+  "audio": {
+    "primary": "#ff8800",
+    "secondary": "#aa5500"
+  }
+}

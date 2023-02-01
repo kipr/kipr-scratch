@@ -1,0 +1,64 @@
+{
+  "digital": {
+    "return_type": "output_boolean"
+  },
+  "freeze": {
+    "return_type": "shape_statement"
+  },
+  "setpwm": {
+    "return_type": "shape_statement"
+  },
+  "get_motor_done": {
+    "return_type": "output_boolean"
+  },
+  "get_digital_value": {
+    "return_type": "output_boolean"
+  },
+  "set_digital_value": {
+    "parameters": {
+      "1": {
+        "check": "Boolean"
+      }
+    }
+  },
+  "get_digital_pullup": {
+    "return_type": "output_boolean"
+  },
+  "set_digital_pullup": {
+    "parameters": {
+      "1": {
+        "check": "Boolean"
+      }
+    }
+  },
+  "get_digital_output": {
+    "return_type": "output_boolean"
+  },
+  "set_digital_output": {
+    "parameters": {
+      "1": {
+        "check": "Boolean"
+      }
+    }
+  },
+  "get_servo_enabled": {
+    "return_type": "output_boolean"
+  },
+  "set_servo_enabled": {
+    "parameters": {
+      "1": {
+        "check": "Boolean"
+      }
+    }
+  },
+  "set_analog_pullup": {
+    "parameters": {
+      "1": {
+        "check": "Boolean"
+      }
+    }
+  },
+  "get_analog_pullup": {
+    "return_type": "output_boolean"
+  }
+}
