@@ -316,6 +316,16 @@ if not path.exists(colours_js_orig):
 with open(colours_js_orig) as f:
   # Insert on the 25th line
   lines = f.readlines()
+
+  for i, line in enumerate(lines):
+    if '"flyout":' in line:
+      lines[i] = '  "flyout": "transparent",\n'
+    if '"toolbox":' in line:
+      lines[i] = '  "toolbox": "transparent",\n'
+    if '"workspace":' in line:
+      lines[i] = '  "workspace": "transparent",\n'
+
+
   for module in modules:
     module_color = module_colors.get(module.name)
     lines.insert(25, "'" + module.name + "': {")
