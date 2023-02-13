@@ -1,0 +1,15 @@
+{
+  "primary_saturation": 40.6,
+  "primary_lightness": 57.1,
+  "tertiary_saturation": 36.4,
+  "tertiary_lightness": 42.0,
+  "hues": {
+    "wait_for": 20,
+    "time": 50,
+    "core": 80,
+    "motor": 140,
+    "servo": 170,
+    "digital": 320,
+    "analog": 350
+  }
+}

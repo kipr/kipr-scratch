@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import List
 import json
 from shutil import copyfile
+from colorsys import hls_to_rgb
 
 @dataclass
 class Parameter:
@@ -303,6 +304,9 @@ for module in modules:
 with open(path.join(getcwd(), 'module_colors.json')) as f:
   module_colors = json.load(f)
 
+with open(path.join(getcwd(), 'module_hsl.json')) as f:
+  module_hsl = json.load(f)
+
 # Patch in colors to scratch-blocks/core/colours.js
 
 colours_js_path = path.join('scratch-blocks', 'core', 'colours.js')
@@ -325,13 +329,24 @@ with open(colours_js_orig) as f:
     if '"workspace":' in line:
       lines[i] = '  "workspace": "transparent",\n'
 
+  primary_saturation = module_hsl.get("primary_saturation")
+  primary_lightness = module_hsl.get("primary_lightness")
+
+  tertiary_saturation = module_hsl.get("tertiary_saturation")
+  tertiary_lightness = module_hsl.get("tertiary_lightness")
+  
 
   for module in modules:
+    hue = module_hsl.get("hues").get(module, 0)
+
+    (pr, pg, pb) = hls_to_rgb(hue / 360, primary_lightness / 100, primary_saturation / 100)
+    (tr, tg, tb) = hls_to_rgb(hue / 360, tertiary_lightness / 100, tertiary_saturation / 100)
+
     module_color = module_colors.get(module.name)
     lines.insert(25, "'" + module.name + "': {")
-    lines.insert(26, "  'primary': '" + module_color.get('primary', '#000000') + "',")
+    lines.insert(26, "  'primary': '" + '#%02x%02x%02x' % (pr * 255, pg * 255, pb * 255) + "',")
     lines.insert(27, "  'secondary': '" + module_color.get('secondary', '#000000') + "',")
-    lines.insert(28, "  'tertiary': '" + module_color.get('tertiary', '#000000') + "'")
+    lines.insert(28, "  'tertiary': '" + '#%02x%02x%02x' % (tr * 255, tg * 255, tb * 255) + "'")
     lines.insert(29, "},")
   with open(colours_js_path, 'w') as f:
     f.writelines(lines)
