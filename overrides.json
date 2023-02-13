@@ -60,5 +60,23 @@
   },
   "get_analog_pullup": {
     "return_type": "output_boolean"
+  },
+  "mav": {
+    "return_type": "shape_statement"
+  },
+  "move_at_velocity": {
+    "return_type": "shape_statement"
+  },
+  "mtp": {
+    "return_type": "shape_statement"
+  },
+  "move_to_position": {
+    "return_type": "shape_statement"
+  },
+  "mrp": {
+    "return_type": "shape_statement"
+  },
+  "move_relative_position": {
+    "return_type": "shape_statement"
   }
 }

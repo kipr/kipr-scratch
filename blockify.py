@@ -359,14 +359,11 @@ output_js += "goog.require('Blockly.Blocks');\n"
 
 output_js += "Blockly.Blocks.defaultToolbox = `\n";
 output_js += '<xml id="toolbox-categories" style="display: none">\n'
-for module in modules:
+sorted_modules = sorted(modules, key=lambda m: module_hsl.get("hues").get(m.name, 0))
+for module in sorted_modules:
   if module.name not in module_whitelist: continue
 
-  primary_saturation = module_hsl.get("primary_saturation")
-  primary_lightness = module_hsl.get("primary_lightness")
-
-  secondary_saturation = module_hsl.get("secondary_saturation")
-  secondary_lightness = module_hsl.get("secondary_lightness")
+  hue = module_hsl.get("hues").get(module.name, 0)
 
   (pr, pg, pb) = hls_to_rgb(hue / 360, primary_lightness / 100, primary_saturation / 100)
   (sr, sg, sb) = hls_to_rgb(hue / 360, secondary_lightness / 100, secondary_saturation / 100)
