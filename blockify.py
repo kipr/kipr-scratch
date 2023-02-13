@@ -300,10 +300,6 @@ for module in modules:
   with open(path.join(output_dir, module.name + '.js'), 'w') as f:
     f.write(output_js)
 
-# Load "module_color.json" file in working directory
-with open(path.join(getcwd(), 'module_colors.json')) as f:
-  module_colors = json.load(f)
-
 with open(path.join(getcwd(), 'module_hsl.json')) as f:
   module_hsl = json.load(f)
 
@@ -332,22 +328,25 @@ with open(colours_js_orig) as f:
   primary_saturation = module_hsl.get("primary_saturation")
   primary_lightness = module_hsl.get("primary_lightness")
 
+  secondary_saturation = module_hsl.get("secondary_saturation")
+  secondary_lightness = module_hsl.get("secondary_lightness")
+
   tertiary_saturation = module_hsl.get("tertiary_saturation")
   tertiary_lightness = module_hsl.get("tertiary_lightness")
   
 
   for module in modules:
-    hue = module_hsl.get("hues").get(module, 0)
+    hue = module_hsl.get("hues").get(module.name, 0)
 
     (pr, pg, pb) = hls_to_rgb(hue / 360, primary_lightness / 100, primary_saturation / 100)
+    (sr, sg, sb) = hls_to_rgb(hue / 360, secondary_lightness / 100, secondary_saturation / 100)
     (tr, tg, tb) = hls_to_rgb(hue / 360, tertiary_lightness / 100, tertiary_saturation / 100)
 
-    module_color = module_colors.get(module.name)
-    lines.insert(25, "'" + module.name + "': {")
-    lines.insert(26, "  'primary': '" + '#%02x%02x%02x' % (pr * 255, pg * 255, pb * 255) + "',")
-    lines.insert(27, "  'secondary': '" + module_color.get('secondary', '#000000') + "',")
-    lines.insert(28, "  'tertiary': '" + '#%02x%02x%02x' % (tr * 255, tg * 255, tb * 255) + "'")
-    lines.insert(29, "},")
+    lines.insert(25, "  '" + module.name + "': {\n")
+    lines.insert(26, "    'primary': '#%02x%02x%02x',\n" % (int(pr * 255), int(pg * 255), int(pb * 255)))
+    lines.insert(26, "    'secondary': '#%02x%02x%02x',\n" % (int(sr * 255), int(sg * 255), int(sb * 255)))
+    lines.insert(28, "    'tertiary': '#%02x%02x%02x'\n" % (int(tr * 255), int(tg * 255), int(tb * 255)))
+    lines.insert(29, "  },\n")
   with open(colours_js_path, 'w') as f:
     f.writelines(lines)
 
@@ -362,8 +361,18 @@ output_js += "Blockly.Blocks.defaultToolbox = `\n";
 output_js += '<xml id="toolbox-categories" style="display: none">\n'
 for module in modules:
   if module.name not in module_whitelist: continue
-  module_color = module_colors.get(module.name)
-  output_js += '  <category name="' + module.name + '" id="' + module.name + '" colour="' + module_color.get('primary') + '" secondaryColour="' + module_color.get('secondary') + '">'
+
+  primary_saturation = module_hsl.get("primary_saturation")
+  primary_lightness = module_hsl.get("primary_lightness")
+
+  secondary_saturation = module_hsl.get("secondary_saturation")
+  secondary_lightness = module_hsl.get("secondary_lightness")
+
+  (pr, pg, pb) = hls_to_rgb(hue / 360, primary_lightness / 100, primary_saturation / 100)
+  (sr, sg, sb) = hls_to_rgb(hue / 360, secondary_lightness / 100, secondary_saturation / 100)
+  
+
+  output_js += '  <category name="' + module.name + '" id="' + module.name + '" colour="#%02x%02x%02x" secondaryColour="#%02x%02x%02x">' % (int(pr * 255), int(pg * 255), int(pb * 255), int(sr * 255), int(sg * 255), int(sb * 255))
   for function in module.functions:
     output_js += f"    <block type=\"{module.name}_{function.name}\">\n"
     i = 0
