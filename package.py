@@ -1,6 +1,7 @@
 from shutil import copyfile
 from os import path, makedirs, getcwd
 import json
+from distutils.dir_util import copy_tree
 
 
 scratch_blocks_path = "scratch-blocks"
@@ -31,6 +32,11 @@ copyfile(
 copyfile(
   path.join(scratch_blocks_path, "msg", "scratch_msgs.js"),
   path.join(kipr_scratch_path, "scratch_msgs.js")
+)
+
+copy_tree(
+  path.join(scratch_blocks_path, "media"),
+  path.join(kipr_scratch_path, "media")
 )
 
 # Write package.json
