@@ -328,7 +328,7 @@ with open(colours_js_orig) as f:
     if '"toolboxSelected": ' in line:
       lines[i] = '  "toolboxSelected": "#313131",\n'
     if '"text": ' in line:
-      lines[i] = '  "text": "#FFFFFF",\n'
+      lines[i] = '  "text": "#000000",\n'
     if '"toolboxText": ' in line:
       lines[i] = '  "toolboxText": "#EEEEEE",\n'
 
