@@ -318,9 +318,9 @@ with open(colours_js_orig) as f:
 
   for i, line in enumerate(lines):
     if '"flyout":' in line:
-      lines[i] = '  "flyout": "transparent",\n'
+      lines[i] = '  "flyout": "#ff0000",\n'
     if '"toolbox":' in line:
-      lines[i] = '  "toolbox": "transparent",\n'
+      lines[i] = '  "toolbox": "#ff0000",\n'
     # if '"workspace":' in line:
     #   lines[i] = '  "workspace": "transparent",\n'
 
