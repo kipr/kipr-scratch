@@ -661,3 +661,20 @@ with open(messages_js_orig) as f:
 
   with open(messages_js_path, 'w') as f:
     f.writelines(lines)
+
+# Write vertical_extensions.js
+workspace_svg_js_path = path.join('scratch-blocks', 'core', 'workspace_svg.js')
+workspace_svg_js_orig = f"{workspace_svg_js_path}.orig"
+
+# Check if workspace_svg.js.orig exists
+if not path.exists(workspace_svg_js_orig):
+  # Copy workspace_svg.js to workspace_svg.js.orig
+  copyfile(workspace_svg_js_path, workspace_svg_js_orig)
+
+# Replace line 443 with "{'height': '100%', 'width': '100%'},"
+with open(workspace_svg_js_orig) as f:
+  lines = f.readlines()
+  lines[442] = "  {'height': '100%', 'width': '100%'},\n"
+
+  with open(workspace_svg_js_path, 'w') as f:
+    f.writelines(lines)
