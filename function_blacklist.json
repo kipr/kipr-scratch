@@ -1,6 +1,7 @@
 {
   "motor": [
-    "set_pid_gains"
+    "set_pid_gains",
+    "get_pid_gains"
   ],
   "wait_for": [
     "wait_for_a_button",

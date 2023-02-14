@@ -215,7 +215,6 @@ module_whitelist = [
   'time',
   'motor',
   'servo',
-  'core',
 ]
 
 overrides_json = None
@@ -377,7 +376,7 @@ for module in sorted_modules:
   output_js += '  <category name="' + module.name + '" id="' + module.name + '" colour="#%02x%02x%02x" secondaryColour="#%02x%02x%02x">' % (int(pr * 255), int(pg * 255), int(pb * 255), int(sr * 255), int(sg * 255), int(sb * 255))
   for function in module.functions:
     if function.name in function_blacklist.get(module.name, []): continue
-    
+
     output_js += f"    <block type=\"{module.name}_{function.name}\">\n"
     i = 0
     for parameter in function.parameters:
