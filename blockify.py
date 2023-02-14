@@ -329,6 +329,8 @@ with open(colours_js_orig) as f:
       lines[i] = '  "toolboxSelected": "#313131",\n'
     if '"text": ' in line:
       lines[i] = '  "text": "#FFFFFF",\n'
+    if '"toolboxText": ' in line:
+      lines[i] = '  "toolboxText": "#EEEEEE",\n'
 
   primary_saturation = module_hsl.get("primary_saturation")
   primary_lightness = module_hsl.get("primary_lightness")
