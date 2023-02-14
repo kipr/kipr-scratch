@@ -318,11 +318,11 @@ with open(colours_js_orig) as f:
 
   for i, line in enumerate(lines):
     if '"flyout":' in line:
-      lines[i] = '  "flyout": "#ff0000",\n'
+      lines[i] = '  "flyout": "#212121",\n'
     if '"toolbox":' in line:
-      lines[i] = '  "toolbox": "#ff0000",\n'
-    # if '"workspace":' in line:
-    #   lines[i] = '  "workspace": "transparent",\n'
+      lines[i] = '  "toolbox": "#212121",\n'
+    if '"workspace":' in line:
+      lines[i] = '  "workspace": "#212121",\n'
 
   primary_saturation = module_hsl.get("primary_saturation")
   primary_lightness = module_hsl.get("primary_lightness")
