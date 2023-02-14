@@ -317,8 +317,8 @@ with open(colours_js_orig) as f:
   lines = f.readlines()
 
   for i, line in enumerate(lines):
-    # if '"flyout":' in line:
-    #   lines[i] = '  "flyout": "transparent",\n'
+    if '"flyout":' in line:
+      lines[i] = '  "flyout": "transparent",\n'
     if '"toolbox":' in line:
       lines[i] = '  "toolbox": "transparent",\n'
     # if '"workspace":' in line:
