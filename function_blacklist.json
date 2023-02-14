@@ -1,0 +1,22 @@
+{
+  "motor": [
+    "set_pid_gains"
+  ],
+  "wait_for": [
+    "wait_for_a_button",
+    "wait_for_b_button",
+    "wait_for_c_button",
+    "wait_for_x_button",
+    "wait_for_y_button",
+    "wait_for_z_button",
+    "wait_for_side_button",
+    "wait_for_any_button",
+    "wait_for_a_button_clicked",
+    "wait_for_b_button_clicked",
+    "wait_for_c_button_clicked",
+    "wait_for_x_button_clicked",
+    "wait_for_y_button_clicked",
+    "wait_for_z_button_clicked",
+    "wait_for_side_button_clicked"
+  ]
+}

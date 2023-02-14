@@ -359,6 +359,11 @@ output_js += "goog.require('Blockly.Blocks');\n"
 
 output_js += "Blockly.Blocks.defaultToolbox = `\n";
 output_js += '<xml id="toolbox-categories" style="display: none">\n'
+
+function_blacklist_path = path.join(getcwd(), 'function_blacklist.json')
+with open(function_blacklist_path) as f:
+  function_blacklist = json.load(f)
+
 sorted_modules = sorted(modules, key=lambda m: module_hsl.get("hues").get(m.name, 0))
 for module in sorted_modules:
   if module.name not in module_whitelist: continue
@@ -371,6 +376,8 @@ for module in sorted_modules:
 
   output_js += '  <category name="' + module.name + '" id="' + module.name + '" colour="#%02x%02x%02x" secondaryColour="#%02x%02x%02x">' % (int(pr * 255), int(pg * 255), int(pb * 255), int(sr * 255), int(sg * 255), int(sb * 255))
   for function in module.functions:
+    if function.name in function_blacklist.get(module.name, []): continue
+    
     output_js += f"    <block type=\"{module.name}_{function.name}\">\n"
     i = 0
     for parameter in function.parameters:
@@ -410,14 +417,6 @@ output_js += '    <block type="control_if" id="control_if"></block>'
 output_js += '    <block type="control_if_else" id="control_if_else"></block>'
 output_js += '    <block type="control_wait_until" id="control_wait_until"></block>'
 output_js += '    <block type="control_repeat_until" id="control_repeat_until"></block>'
-output_js += '    <block type="control_stop" id="control_stop"></block>'
-output_js += '    <block type="control_start_as_clone" id="control_start_as_clone"></block>'
-output_js += '    <block type="control_create_clone_of" id="control_create_clone_of">'
-output_js += '      <value name="CLONE_OPTION">'
-output_js += '        <shadow type="control_create_clone_of_menu"></shadow>'
-output_js += '      </value>'
-output_js += '    </block>'
-output_js += '    <block type="control_delete_this_clone" id="control_delete_this_clone"></block>'
 output_js += '  </category>'
 output_js += '  <category name="%{BKY_CATEGORY_OPERATORS}" id="operators" colour="#40BF4A" secondaryColour="#389438">'
 output_js += '    <block type="operator_add" id="operator_add">'
