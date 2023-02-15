@@ -659,6 +659,8 @@ with open(messages_js_orig) as f:
       for parameter in function.parameters:
         lines.append(f"Blockly.Msg.{module.name.upper()}_{function.name.upper()}_{parameter.name.upper()} = '{parameter.name}';\n")
 
+  lines.append(f"Blockly.Msg.CONTROL_RUN = 'On program start';\n")
+
   with open(messages_js_path, 'w') as f:
     f.writelines(lines)
 
@@ -677,4 +679,34 @@ with open(workspace_svg_js_orig) as f:
   lines[442] = "  {'height': '100%', 'width': '100%'},\n"
 
   with open(workspace_svg_js_path, 'w') as f:
+    f.writelines(lines)
+
+control_js_path = path.join('scratch-blocks', 'blocks_vertical', 'control.js')
+control_js_orig = f"{control_js_path}.orig"
+
+# Check if control.js.orig exists
+if not path.exists(control_js_orig):
+  # Copy control.js to control.js.orig
+  copyfile(control_js_path, control_js_orig)
+
+with open(control_js_orig) as f:
+  lines = f.readlines()
+  lines.append('Blockly.Blocks[\'control_run\'] = {\n')
+  lines.append('  /**\n')
+  lines.append('   * Block for "when program is run" hat.\n')
+  lines.append('   * @this Blockly.Block\n')
+  lines.append('   */\n')
+  lines.append('  init: function() {\n')
+  lines.append('    this.jsonInit({\n')
+  lines.append('      "id": "control_run",\n')
+  lines.append('      "message0": Blockly.Msg.CONTROL_RUN,\n')
+  lines.append('      "args0": [\n')
+  lines.append('      ],\n')
+  lines.append('      "category": Blockly.Categories.control,\n')
+  lines.append('      "extensions": ["colours_control", "shape_hat"]\n')
+  lines.append('    });\n')
+  lines.append('  }\n')
+  lines.append('};\n')
+
+  with open(control_js_path, 'w') as f:
     f.writelines(lines)
