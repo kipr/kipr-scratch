@@ -405,6 +405,7 @@ for module in sorted_modules:
 
 # Add static control category
 output_js += '  <category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#FFAB19" secondaryColour="#CF8B17">'
+output_js += '    <block type="control_run" id="control_run"></block>'
 output_js += '    <block type="control_wait" id="control_wait">'
 output_js += '      <value name="DURATION">'
 output_js += '        <shadow type="math_positive_number">'
