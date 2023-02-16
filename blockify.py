@@ -724,8 +724,8 @@ if not path.exists(css_js_orig):
 
 with open(css_js_orig) as f:
   lines = f.readlines()
-  lines[504] = "    'fill: #ffffff;',"
-  lines[512] = "    'fill: rgba(255, 255, 255, 0.1);'",
+  lines[504] = "    'fill: #ffffff;',\n"
+  lines[512] = "    'fill: rgba(255, 255, 255, 0.1);',\n"
   
 
   with open(css_js_path, 'w') as f:
