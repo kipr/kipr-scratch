@@ -596,6 +596,8 @@ output_js += '        </shadow>'
 output_js += '      </value>'
 output_js += '    </block>'
 output_js += '  </category>'
+output_js += '  <category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">'
+output_js += '  </category>'
 output_js += "</xml>\n`;\n"
 
 with open(path.join(output_dir, 'default_toolbox.js'), 'w') as f:
@@ -660,7 +662,7 @@ with open(messages_js_orig) as f:
       for parameter in function.parameters:
         lines.append(f"Blockly.Msg.{module.name.upper()}_{function.name.upper()}_{parameter.name.upper()} = '{parameter.name}';\n")
 
-  lines.append(f"Blockly.Msg.CONTROL_RUN = 'On program start';\n")
+  lines.append(f"Blockly.Msg.CONTROL_RUN = 'when program starts';\n")
 
   with open(messages_js_path, 'w') as f:
     f.writelines(lines)
