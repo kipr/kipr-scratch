@@ -714,18 +714,20 @@ with open(control_js_orig) as f:
   with open(control_js_path, 'w') as f:
     f.writelines(lines)
 
-data_category_js_path = path.join('scratch-blocks', 'blocks_vertical', 'control.js')
-data_category_js_orig = f"{data_category_js_path}.orig"
+css_js_path = path.join('scratch-blocks', 'core', 'css.js')
+css_js_orig = f"{css_js_path}.orig"
 
 # Check if control.js.orig exists
-if not path.exists(data_category_js_orig):
+if not path.exists(css_js_orig):
   # Copy control.js to control.js.orig
-  copyfile(data_category_js_path, data_category_js_orig)
+  copyfile(css_js_path, css_js_orig)
 
-# On line 400, *insert*, do not overwrite, a new line with: button.setAttribute('style', 'color: white;')
-with open(data_category_js_orig) as f:
+with open(css_js_orig) as f:
   lines = f.readlines()
-  lines.insert(400, "  button.setAttribute('style', 'color: white;');\n")
+  lines[504] = "    'fill: #ffffff;',"
+  lines[512] = "    'fill: rgba(255, 255, 255, 0.1);'",
+  
 
-  with open(data_category_js_path, 'w') as f:
+  with open(css_js_path, 'w') as f:
     f.writelines(lines)
+
