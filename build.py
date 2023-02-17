@@ -1,6 +1,7 @@
 #!/bin/python3
 
-from os import path, rename, environ, chdir
+from os import path, rename, environ, chdir, getcwd
+
 import sys
 import subprocess
 
@@ -66,6 +67,35 @@ to_delete = [
   'sound.js'
 ]
 
+python3 = 'python3'
+if is_tool('python3.12'):
+  python3 = 'python3.12'
+elif is_tool('python3.11'):
+  python3 = 'python3.11'
+elif is_tool('python3.10'):
+  python3 = 'python3.10'
+elif is_tool('python3.9'):
+  python3 = 'python3.9'
+elif is_tool('python3.8'):
+  python3 = 'python3.8'
+elif is_tool('python3.7'):
+  python3 = 'python3.7'
+else:
+  print('Warning: Python 3.7+ could not be found. Using `python3`. This might not work.')
+
+python2 = 'python'
+if is_tool('python2.7'):
+  python2 = 'python2.7'
+elif is_tool('python2'):
+  python2 = 'python2'
+else:
+  print('Warning: Python 2.7 could not be found. Using `python`. This might not work.')
+
+
+# Symbolically link python2 to python
+if not path.exists("python"):
+  ret = subprocess.run(["ln", "-s", python2, "python"])
+
 blocks_vertical_path = path.join("scratch-blocks", "blocks_vertical")
 
 for file in to_delete:
@@ -75,11 +105,13 @@ for file in to_delete:
 
 # Blockify
 print("Blockifying libwallaby...")
-ret = subprocess.run(["python3", "blockify.py", "libwallaby-build", "scratch-blocks/blocks_vertical"])
+ret = subprocess.run([python3, "blockify.py", "libwallaby-build", "scratch-blocks/blocks_vertical"])
 
 # Install and build scratch-blocks dependencies
 print("Installing and building scratch-blocks...")
-ret = subprocess.run(["npm", "install"], cwd="scratch-blocks")
+ret = subprocess.run(["npm", "install"], cwd="scratch-blocks", env = {
+  "PATH": f'{path.dirname(getcwd())}:{environ["PATH"]}'
+})
 if ret.returncode != 0:
   print("Failed to install/build scratch-blocks.")
   exit(1)
