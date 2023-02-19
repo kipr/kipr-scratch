@@ -4,10 +4,11 @@ from os import path, rename, environ, chdir, getcwd
 
 import sys
 import subprocess
+from shutil import which
+import json
 
 def is_tool(name):
   """Check whether `name` is on PATH and marked as executable."""
-  from shutil import which
   return which(name) is not None
 
 # Check that submodules are initialized
@@ -89,12 +90,8 @@ if is_tool('python2.7'):
 elif is_tool('python2'):
   python2 = 'python2'
 else:
-  print('Warning: Python 2.7 could not be found. Using `python`. This might not work.')
-
-
-# Symbolically link python2 to python
-if not path.exists("python"):
-  ret = subprocess.run(["ln", "-s", python2, "python"])
+  print('Warning: Python 2.7 could not be found.')
+  exit(1)
 
 blocks_vertical_path = path.join("scratch-blocks", "blocks_vertical")
 
@@ -107,10 +104,23 @@ for file in to_delete:
 print("Blockifying libwallaby...")
 ret = subprocess.run([python3, "blockify.py", "libwallaby-build", "scratch-blocks/blocks_vertical"])
 
+# Patch `scratch-blocks/package.json:.scripts.prepublish` from `python` to `python2`
+package_json_path = path.join('scratch-blocks', 'package.json')
+
+package_json = None
+with open(package_json_path, "r") as f:
+  package_json = json.load(f)
+
+package_json['scripts']['prepublish'] = f'{python2} build.py && webpack'
+
+with open(package_json_path, 'w') as f:
+  f.write(json.dumps(package_json))
+
 # Install and build scratch-blocks dependencies
 print("Installing and building scratch-blocks...")
 ret = subprocess.run(["npm", "install"], cwd="scratch-blocks", env = {
-  "PATH": f'{path.dirname(getcwd())}:{environ["PATH"]}'
+  "PATH": f'{path.dirname(getcwd())}:{environ["PATH"]}',
+  'NODE_OPTIONS': '--openssl-legacy-provider'
 })
 if ret.returncode != 0:
   print("Failed to install/build scratch-blocks.")
