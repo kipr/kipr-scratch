@@ -26,6 +26,12 @@ if not is_tool("node"):
   print("Node.js is required to build libwallaby.")
   exit(1)
 
+# Check node version
+ret = subprocess.run(['node', '-v'], capture_output=True)
+version_str = ret.stdout.decode()
+
+node_major_version = int(version_str.strip()[1:3])
+
 # Get additional CMake arguments
 cmake_args = []
 
@@ -116,12 +122,15 @@ package_json['scripts']['prepublish'] = f'{python2} build.py && webpack'
 with open(package_json_path, 'w') as f:
   f.write(json.dumps(package_json))
 
+
 # Install and build scratch-blocks dependencies
+npm_env = {}
+
+if node_major_version >= 17:
+  npm_env['NODE_OPTIONS'] = '--openssl-legacy-provider'
+
 print("Installing and building scratch-blocks...")
-ret = subprocess.run(["npm", "install"], cwd="scratch-blocks", env = {
-  "PATH": f'{path.dirname(getcwd())}:{environ["PATH"]}',
-  'NODE_OPTIONS': '--openssl-legacy-provider'
-})
+ret = subprocess.run(["npm", "install"], cwd="scratch-blocks", env=npm_env)
 if ret.returncode != 0:
   print("Failed to install/build scratch-blocks.")
   exit(1)
