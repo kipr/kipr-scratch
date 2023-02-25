@@ -21,6 +21,10 @@ if not is_tool("cmake"):
   print("CMake is required to build libwallaby.")
   exit(1)
 
+if not is_tool('java'):
+  print('Java is required to build scratch-blocks.')
+  exit(1)
+
 # Check for Node.js
 if not is_tool("node"):
   print("Node.js is required to build libwallaby.")
@@ -124,10 +128,14 @@ with open(package_json_path, 'w') as f:
 
 
 # Install and build scratch-blocks dependencies
-npm_env = {}
+scratch_blocks_node_modules_bin = path.join(getcwd(), "scratch-blocks", "node_modules", ".bin")
+npm_env = {
+  'PATH': f"{scratch_blocks_node_modules_bin}:{environ['PATH']}",
+}
 
 if node_major_version >= 17:
   npm_env['NODE_OPTIONS'] = '--openssl-legacy-provider'
+
 
 print("Installing and building scratch-blocks...")
 ret = subprocess.run(["npm", "install"], cwd="scratch-blocks", env=npm_env)
