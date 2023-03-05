@@ -731,3 +731,20 @@ with open(css_js_orig) as f:
   with open(css_js_path, 'w') as f:
     f.writelines(lines)
 
+
+field_variable_js_path = path.join('scratch-blocks', 'core', 'field_variable.js')
+field_variable_js_orig = f"{field_variable_js_path}.orig"
+
+# Check if field_variable.js.orig exists
+if not path.exists(field_variable_js_orig):
+  # Copy field_variable.js to field_variable.js.orig
+  copyfile(field_variable_js_path, field_variable_js_orig)
+
+# Comment out lines 112 and 113
+with open(field_variable_js_orig) as f:
+  lines = f.readlines()
+  lines[111] = "\n"
+  lines[112] = "\n"
+
+  with open(field_variable_js_path, 'w') as f:
+    f.writelines(lines)
