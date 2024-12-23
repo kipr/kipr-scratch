@@ -94,15 +94,6 @@ elif is_tool('python3.7'):
 else:
   print('Warning: Python 3.7+ could not be found. Using `python3`. This might not work.')
 
-python2 = 'python'
-if is_tool('python2.7'):
-  python2 = 'python2.7'
-elif is_tool('python2'):
-  python2 = 'python2'
-else:
-  print('Warning: Python 2.7 could not be found.')
-  exit(1)
-
 blocks_vertical_path = path.join("scratch-blocks", "blocks_vertical")
 
 for file in to_delete:
@@ -114,17 +105,6 @@ for file in to_delete:
 print("Blockifying libwallaby...")
 ret = subprocess.run([python3, "blockify.py", "libwallaby-build", "scratch-blocks/blocks_vertical"])
 
-# Patch `scratch-blocks/package.json:.scripts.prepublish` from `python` to `python2`
-package_json_path = path.join('scratch-blocks', 'package.json')
-
-package_json = None
-with open(package_json_path, "r") as f:
-  package_json = json.load(f)
-
-package_json['scripts']['prepublish'] = f'{python2} build.py && webpack'
-
-with open(package_json_path, 'w') as f:
-  f.write(json.dumps(package_json))
 
 
 # Install and build scratch-blocks dependencies
@@ -137,8 +117,22 @@ if node_major_version >= 17:
   npm_env['NODE_OPTIONS'] = '--openssl-legacy-provider'
 
 
-print("Installing and building scratch-blocks...")
-ret = subprocess.run(["npm", "install"], cwd="scratch-blocks", env=npm_env)
+# Run without scripts to skip the prepublish script
+# We need to run prepublish steps separately so we can specifically use python3
+print("Running 'npm install' for scratch-blocks...")
+ret = subprocess.run(["npm", "install", "--ignore-scripts"], cwd="scratch-blocks")
 if ret.returncode != 0:
-  print("Failed to install/build scratch-blocks.")
+  print("Failed to run 'npm install' for scratch-blocks.")
+  exit(1)
+
+print("Building scratch-blocks...")
+ret = subprocess.run([python3, "build.py"], cwd="scratch-blocks", env=npm_env)
+if ret.returncode != 0:
+  print("Failed to build scratch-blocks.")
+  exit(1)
+
+print("Webpacking scratch-blocks...")
+ret = subprocess.run(["webpack"], cwd="scratch-blocks", env=npm_env)
+if ret.returncode != 0:
+  print("Failed to webpack scratch-blocks.")
   exit(1)
