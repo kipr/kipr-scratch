@@ -627,13 +627,13 @@ with open(vertical_extensions_js_orig) as f:
   category_names += "];\n"
   
   
-  # Replace the 223rd line
+  # Replace the 225th line
   lines = f.readlines()
-  lines[222] = category_names
+  lines[224] = category_names
 
-  # Delete line 224 and 225
-  lines.pop(223)
-  lines.pop(223)
+  # Delete line 226 and 227
+  lines.pop(225)
+  lines.pop(225)
 
   with open(vertical_extensions_js_path, 'w') as f:
     f.writelines(lines)
