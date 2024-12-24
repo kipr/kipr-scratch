@@ -340,7 +340,9 @@ with open(colours_js_orig) as f:
 
   tertiary_saturation = module_hsl.get("tertiary_saturation")
   tertiary_lightness = module_hsl.get("tertiary_lightness")
-  
+
+  quaternary_saturation = module_hsl.get("quaternary_saturation")
+  quaternary_lightness = module_hsl.get("quaternary_lightness")  
 
   for module in modules:
     hue = module_hsl.get("hues").get(module.name, 0)
@@ -348,12 +350,14 @@ with open(colours_js_orig) as f:
     (pr, pg, pb) = hls_to_rgb(hue / 360, primary_lightness / 100, primary_saturation / 100)
     (sr, sg, sb) = hls_to_rgb(hue / 360, secondary_lightness / 100, secondary_saturation / 100)
     (tr, tg, tb) = hls_to_rgb(hue / 360, tertiary_lightness / 100, tertiary_saturation / 100)
+    (qr, qg, qb) = hls_to_rgb(hue / 360, quaternary_lightness / 100, quaternary_saturation / 100)
 
     lines.insert(25, "  '" + module.name + "': {\n")
     lines.insert(26, "    'primary': '#%02x%02x%02x',\n" % (int(pr * 255), int(pg * 255), int(pb * 255)))
     lines.insert(26, "    'secondary': '#%02x%02x%02x',\n" % (int(sr * 255), int(sg * 255), int(sb * 255)))
-    lines.insert(28, "    'tertiary': '#%02x%02x%02x'\n" % (int(tr * 255), int(tg * 255), int(tb * 255)))
-    lines.insert(29, "  },\n")
+    lines.insert(28, "    'tertiary': '#%02x%02x%02x',\n" % (int(tr * 255), int(tg * 255), int(tb * 255)))
+    lines.insert(29, "    'quaternary': '#%02x%02x%02x'\n" % (int(qr * 255), int(qg * 255), int(qb * 255)))
+    lines.insert(30, "  },\n")
   with open(colours_js_path, 'w') as f:
     f.writelines(lines)
 
