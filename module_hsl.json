@@ -5,6 +5,8 @@
   "secondary_lightness": 49.0,
   "tertiary_saturation": 36.4,
   "tertiary_lightness": 42.0,
+  "quaternary_saturation": 34.4,
+  "quaternary_lightness": 35.0,
   "hues": {
     "wait_for": 20,
     "time": 50,
