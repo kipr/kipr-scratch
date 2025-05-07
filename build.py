@@ -7,6 +7,9 @@ import subprocess
 from shutil import which
 import json
 
+
+print("Using local kipr-scratch")
+
 def is_tool(name):
   """Check whether `name` is on PATH and marked as executable."""
   return which(name) is not None
